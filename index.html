@@ -265,14 +265,36 @@ async function loadWatchData() {
     })
     document.getElementById('health-live').classList.remove('hidden')
     if (snap.receivedAt) document.getElementById('health-updated').textContent = `synced ${new Date(snap.receivedAt).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`
+
+    if (snap.hourlyEnergy) updateEnergyChart(snap.hourlyEnergy)
   } catch {}
+}
+
+// Blend Apple Watch hourly energy into the graph.
+// Slots with real watch data replace the baseline; future/unknown slots keep the baseline.
+function updateEnergyChart(hourlyEnergy) {
+  if (!energyChart || !Array.isArray(hourlyEnergy)) return
+
+  const blended = ENERGY_CURVE.map((base, i) =>
+    hourlyEnergy[i] != null ? hourlyEnergy[i] : base
+  )
+
+  energyChart.data.datasets[0].data = blended.map((v, i) => ({ x: i, y: v }))
+
+  // Reposition annotation dots to match the actual plotted values
+  ANNOTATIONS = ANNOTATIONS.map(ann => ({
+    ...ann,
+    value: blended[ann.hour] ?? ann.value
+  }))
+
+  energyChart.update('none')
 }
 
 // ── Circadian energy data ──────────────────────────────
 const ENERGY_CURVE = [22,19,17,16,18,24,34,49,66,79,87,89,85,78,68,58,56,63,72,74,70,62,50,37]
 
-// Annotation points drawn directly on the graph
-const ANNOTATIONS = [
+// Annotation points — updated dynamically once watch data arrives
+let ANNOTATIONS = [
   { hour: 11, value: 89, label: '⚡ Peak Energy', above: true,  color: '#fde68a' },
   { hour: 16, value: 56, label: '↓ Dip',          above: false, color: '#94a3b8' },
   { hour: 19, value: 74, label: '↑ Second Wind',  above: true,  color: '#6ee7b7' },

@@ -47,7 +47,7 @@
       <button id="sidebarToggle" class="lg:hidden p-2 text-slate-400 hover:text-slate-200 hover:bg-blue-900/30 rounded-lg transition-colors" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
       <span class="font-mono text-sm font-semibold text-slate-200">Revision Hub</span>
       <div class="ml-auto flex items-center gap-2">
-        <button onclick="syncFromServer()" title="Sync now" class="text-[10px] font-mono text-slate-500 hover:text-blue-400 transition-colors px-1.5 py-0.5 rounded border border-slate-700/40 hover:border-blue-700/40">⟳ sync</button>
+        <button onclick="manualSync()" title="Sync now" class="text-[10px] font-mono text-slate-500 hover:text-blue-400 transition-colors px-1.5 py-0.5 rounded border border-slate-700/40 hover:border-blue-700/40">⟳ sync</button>
         <span id="sync-status" class="text-[10px] font-mono text-slate-600"></span>
         <span id="sync-dot" class="w-1.5 h-1.5 rounded-full bg-slate-700"></span>
         <span class="text-xs font-mono text-slate-600" id="last-render"></span>
@@ -254,30 +254,64 @@ async function pushToServer(payload) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     })
-    setSyncDot(r.ok ? 'ok' : 'error')
-    if (!r.ok) console.error('Revision sync push failed:', r.status, await r.text())
-  } catch (e) { setSyncDot('error'); console.error('Revision sync push error:', e) }
+    if (r.ok) {
+      setSyncDot('ok')
+    } else {
+      const errText = await r.text()
+      console.error('Revision push failed', r.status, errText)
+      setSyncDot('error')
+      return { ok: false, status: r.status, body: errText }
+    }
+  } catch (e) {
+    console.error('Revision push error:', e)
+    setSyncDot('error')
+    return { ok: false, status: 0, body: e.message }
+  }
+  return { ok: true }
 }
 
 async function syncFromServer() {
   setSyncDot('syncing')
   try {
     const r = await fetch('/api/revision')
-    if (!r.ok) { setSyncDot('error'); return }
+    if (!r.ok) {
+      console.error('Revision GET failed', r.status)
+      setSyncDot('error')
+      return { ok: false, step: 'GET', status: r.status }
+    }
     const remote = await r.json()
 
     if (!remote || !remote.topics) {
-      // Server has no data yet — push current local state up so other devices can pull it
-      pushToServer(serialise())
-      return
+      // Nothing on server yet — push local state up
+      return await pushToServer(serialise())
     }
 
-    // Server has data — use it as source of truth
     localStorage.setItem('revision-hub', JSON.stringify(remote))
     S = loadState(remote)
     render()
     setSyncDot('ok')
-  } catch (e) { setSyncDot('error'); console.error('Revision sync pull error:', e) }
+    return { ok: true }
+  } catch (e) {
+    console.error('Revision sync error:', e)
+    setSyncDot('error')
+    return { ok: false, step: 'GET', body: e.message }
+  }
+}
+
+// Manual sync — shows a plain-English alert so we can diagnose failures
+async function manualSync() {
+  const result = await syncFromServer()
+  if (!result) return
+  if (result.ok) {
+    alert('Synced successfully ✓')
+  } else {
+    alert(
+      'Sync failed — copy this and send it:\n\n' +
+      'Step: ' + (result.step || 'POST') + '\n' +
+      'Status: ' + result.status + '\n' +
+      'Detail: ' + (result.body || '(none)')
+    )
+  }
 }
 
 // ── Mutations ──────────────────────────────────────────

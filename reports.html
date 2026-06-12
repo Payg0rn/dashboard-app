@@ -201,6 +201,15 @@ const SUBJ_BADGE = {
   maths:     'bg-emerald-900/40 text-emerald-300 border-emerald-700/40',
 }
 
+// Compact encoding for cloud storage — status codes keep the payload tiny
+// s=status(n/i/c/r)  d=lastCovered  f=confidence
+const STATUS_CODE   = { 'not-started':'n', 'in-progress':'i', 'covered':'c', 'needs-recap':'r' }
+const STATUS_DECODE = Object.fromEntries(Object.entries(STATUS_CODE).map(([k,v])=>[v,k]))
+
+// Flat lookup of CONFIG seeds by topic id for diff detection
+const CONFIG_SEED = {}
+for (const s of SUBJ_KEYS) for (const t of CONFIG[s].topics) CONFIG_SEED[t.id] = t
+
 function todayStr() { return new Date().toISOString().slice(0,10) }
 function daysUntil(d) { const t=new Date(); t.setHours(0,0,0,0); return Math.ceil((new Date(d)-t)/86400000) }
 function daysSince(d) { if(!d) return null; const t=new Date(); t.setHours(0,0,0,0); return Math.floor((t-new Date(d))/86400000) }
@@ -209,18 +218,36 @@ function loadState(saved) {
   const src = saved || JSON.parse(localStorage.getItem('revision-hub')||'{}')
   const st = src.topics || {}
   const topics = {}
-  for (const s of SUBJ_KEYS)
-    topics[s] = CONFIG[s].topics.map(t => ({ ...t, ...(st[t.id]||{}) }))
+  for (const s of SUBJ_KEYS) {
+    topics[s] = CONFIG[s].topics.map(t => {
+      const o = st[t.id] || {}
+      return {
+        ...t,
+        // Accept compact keys (s/d/f) or legacy verbose keys — CONFIG seed is the fallback
+        status:      STATUS_DECODE[o.s] || o.status      || t.status,
+        lastCovered: 'd' in o ? o.d    : ('lastCovered' in o ? o.lastCovered : t.lastCovered),
+        conf:        'f' in o ? o.f    : ('conf'        in o ? o.conf        : t.conf),
+      }
+    })
+  }
   return { topics, papers: src.papers || [] }
 }
 let S = loadState()
 
 function serialise() {
+  // Only store topics that differ from their CONFIG seed — keeps payload under ~1 KB
   const flat = {}
-  for (const s of SUBJ_KEYS)
-    for (const t of S.topics[s])
-      flat[t.id] = { status:t.status, lastCovered:t.lastCovered, conf:t.conf }
-  return { topics:flat, papers:S.papers }
+  for (const s of SUBJ_KEYS) {
+    for (const t of S.topics[s]) {
+      const seed = CONFIG_SEED[t.id] || {}
+      const e = {}
+      if ((t.status      ?? null) !== (seed.status      ?? null)) e.s = STATUS_CODE[t.status] || t.status
+      if ((t.lastCovered ?? null) !== (seed.lastCovered ?? null)) e.d = t.lastCovered
+      if ((t.conf        ?? null) !== (seed.conf        ?? null)) e.f = t.conf
+      if (Object.keys(e).length) flat[t.id] = e
+    }
+  }
+  return { topics: flat, papers: S.papers }
 }
 
 function saveState() {

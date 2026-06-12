@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusFlow — Settings</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Fira Sans','system-ui','sans-serif'],mono:['Fira Code','monospace']}}}}</script>
+  <style>::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:#0D1426}::-webkit-scrollbar-thumb{background:#1E40AF;border-radius:2px}@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0.01ms!important;animation-duration:0.01ms!important}}</style>
+</head>
+<body class="bg-[#0A0F1E] text-slate-100 font-sans antialiased overflow-x-hidden">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-lg focus:outline-none">Skip to main content</a>
+  <div class="flex h-screen overflow-hidden">
+
+    <aside id="sidebar" aria-label="Main navigation" class="w-64 bg-[#0D1426] border-r border-blue-900/30 flex flex-col fixed inset-y-0 left-0 z-30 transition-transform duration-200 -translate-x-full lg:translate-x-0">
+      <div class="h-16 flex items-center px-6 border-b border-blue-900/30 flex-shrink-0"><div class="flex items-center gap-3"><div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div><span class="font-bold text-lg text-white tracking-tight">NexusFlow</span></div></div>
+      <nav class="flex-1 overflow-y-auto py-4 px-3">
+        <div class="mb-6"><p class="text-xs font-medium text-slate-500 uppercase tracking-wider px-3 mb-2">Main</p>
+          <ul class="space-y-0.5" role="list">
+            <li><a href="index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Dashboard</span></a></li>
+            <li><a href="analytics.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg><span>Analytics</span></a></li>
+            <li><a href="users.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg><span>Users</span></a></li>
+            <li><a href="orders.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg><span>Orders</span><span class="ml-auto bg-amber-500 text-[#0A0F1E] text-xs font-bold px-1.5 py-0.5 rounded-full leading-none">12</span></a></li>
+            <li><a href="products.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg><span>Products</span></a></li>
+          </ul>
+        </div>
+        <div><p class="text-xs font-medium text-slate-500 uppercase tracking-wider px-3 mb-2">System</p>
+          <ul class="space-y-0.5" role="list">
+            <li><a href="reports.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg><span>Reports</span></a></li>
+            <li><a href="settings.html" aria-current="page" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-600/20 text-blue-400 border border-blue-500/20 font-medium cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>Settings</span></a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="border-t border-blue-900/30 p-4 flex items-center gap-3 flex-shrink-0"><div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-bold text-sm flex-shrink-0" aria-hidden="true">LJ</div><div class="min-w-0 flex-1"><p class="text-sm font-medium text-slate-200 truncate">Leo Standing</p><p class="text-xs text-slate-500 truncate">leojstanding@gmail.com</p></div><button class="p-1.5 text-slate-500 hover:text-slate-300 hover:bg-blue-900/30 rounded-lg transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Sign out"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg></button></div>
+    </aside>
+
+    <div class="flex-1 flex flex-col lg:ml-64 min-h-screen overflow-y-auto">
+      <header class="h-16 bg-[#0D1426]/80 backdrop-blur-sm border-b border-blue-900/30 flex items-center px-4 lg:px-6 gap-4 sticky top-0 z-20 flex-shrink-0">
+        <button id="sidebarToggle" class="lg:hidden p-2 text-slate-400 hover:text-slate-200 hover:bg-blue-900/30 rounded-lg transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+        <div class="flex-1 max-w-xs relative"><svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><input type="search" placeholder="Search..." aria-label="Search" class="w-full bg-[#0A0F1E] border border-blue-900/30 rounded-lg pl-9 pr-4 py-2 text-sm text-slate-300 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"></div>
+        <div class="flex items-center gap-2 ml-auto"><button class="relative p-2 text-slate-400 hover:text-slate-200 hover:bg-blue-900/30 rounded-lg transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Notifications"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg><span class="absolute top-1.5 right-1.5 w-2 h-2 bg-amber-500 rounded-full" aria-hidden="true"></span></button><div class="w-px h-6 bg-blue-900/50 mx-1" aria-hidden="true"></div><button class="flex items-center gap-2 p-1 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg" aria-label="User menu"><div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-xs font-bold" aria-hidden="true">LJ</div><svg class="w-4 h-4 text-slate-500 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button></div>
+      </header>
+
+      <main id="main-content" class="flex-1 p-4 lg:p-6 space-y-6 max-w-3xl">
+        <div>
+          <h1 class="text-2xl font-bold text-white">Settings</h1>
+          <p class="text-slate-400 text-sm mt-0.5">Manage your account and preferences</p>
+        </div>
+
+        <!-- Profile section -->
+        <section class="bg-[#111827] border border-blue-900/30 rounded-xl p-6 space-y-5" aria-labelledby="profile-title">
+          <h2 id="profile-title" class="text-sm font-semibold text-slate-200">Profile</h2>
+          <div class="flex items-center gap-4">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-bold text-xl flex-shrink-0" aria-hidden="true">LJ</div>
+            <div>
+              <p class="text-sm font-medium text-slate-200">Leo Standing</p>
+              <p class="text-xs text-slate-500 mt-0.5">leojstanding@gmail.com</p>
+              <button class="mt-2 text-xs text-blue-400 hover:text-blue-300 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 rounded">Change avatar</button>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="firstName" class="block text-xs font-medium text-slate-400 mb-1.5">First name</label>
+              <input id="firstName" type="text" value="Leo" class="w-full bg-[#0A0F1E] border border-blue-900/30 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+            </div>
+            <div>
+              <label for="lastName" class="block text-xs font-medium text-slate-400 mb-1.5">Last name</label>
+              <input id="lastName" type="text" value="Standing" class="w-full bg-[#0A0F1E] border border-blue-900/30 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+            </div>
+            <div class="sm:col-span-2">
+              <label for="email" class="block text-xs font-medium text-slate-400 mb-1.5">Email address</label>
+              <input id="email" type="email" value="leojstanding@gmail.com" class="w-full bg-[#0A0F1E] border border-blue-900/30 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+            </div>
+          </div>
+          <div class="flex justify-end">
+            <button class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400">Save changes</button>
+          </div>
+        </section>
+
+        <!-- Notifications section -->
+        <section class="bg-[#111827] border border-blue-900/30 rounded-xl p-6 space-y-4" aria-labelledby="notif-title">
+          <h2 id="notif-title" class="text-sm font-semibold text-slate-200">Notifications</h2>
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm text-slate-300">Order updates</p>
+                <p class="text-xs text-slate-500 mt-0.5">Get notified when orders change status</p>
+              </div>
+              <button role="switch" aria-checked="true" class="relative inline-flex h-6 w-11 items-center rounded-full bg-blue-600 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#111827]" aria-label="Order updates notifications">
+                <span class="translate-x-6 inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200" aria-hidden="true"></span>
+              </button>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm text-slate-300">New user registrations</p>
+                <p class="text-xs text-slate-500 mt-0.5">Alert when a new account is created</p>
+              </div>
+              <button role="switch" aria-checked="true" class="relative inline-flex h-6 w-11 items-center rounded-full bg-blue-600 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#111827]" aria-label="New user registration notifications">
+                <span class="translate-x-6 inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200" aria-hidden="true"></span>
+              </button>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm text-slate-300">Weekly digest</p>
+                <p class="text-xs text-slate-500 mt-0.5">Summary email every Monday morning</p>
+              </div>
+              <button role="switch" aria-checked="false" class="relative inline-flex h-6 w-11 items-center rounded-full bg-blue-900/40 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#111827]" aria-label="Weekly digest notifications">
+                <span class="translate-x-1 inline-block h-4 w-4 transform rounded-full bg-slate-400 transition-transform duration-200" aria-hidden="true"></span>
+              </button>
+            </div>
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm text-slate-300">Security alerts</p>
+                <p class="text-xs text-slate-500 mt-0.5">Unusual sign-in activity</p>
+              </div>
+              <button role="switch" aria-checked="true" class="relative inline-flex h-6 w-11 items-center rounded-full bg-blue-600 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-[#111827]" aria-label="Security alert notifications">
+                <span class="translate-x-6 inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Security section -->
+        <section class="bg-[#111827] border border-blue-900/30 rounded-xl p-6 space-y-4" aria-labelledby="security-title">
+          <h2 id="security-title" class="text-sm font-semibold text-slate-200">Security</h2>
+          <div class="space-y-4">
+            <div>
+              <label for="currentPassword" class="block text-xs font-medium text-slate-400 mb-1.5">Current password</label>
+              <input id="currentPassword" type="password" placeholder="••••••••" class="w-full bg-[#0A0F1E] border border-blue-900/30 rounded-lg px-3 py-2 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="newPassword" class="block text-xs font-medium text-slate-400 mb-1.5">New password</label>
+                <input id="newPassword" type="password" placeholder="••••••••" class="w-full bg-[#0A0F1E] border border-blue-900/30 rounded-lg px-3 py-2 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+              </div>
+              <div>
+                <label for="confirmPassword" class="block text-xs font-medium text-slate-400 mb-1.5">Confirm new password</label>
+                <input id="confirmPassword" type="password" placeholder="••••••••" class="w-full bg-[#0A0F1E] border border-blue-900/30 rounded-lg px-3 py-2 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+              </div>
+            </div>
+            <div class="flex justify-end">
+              <button class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400">Update password</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Danger zone -->
+        <section class="bg-[#111827] border border-red-900/30 rounded-xl p-6 space-y-3" aria-labelledby="danger-title">
+          <h2 id="danger-title" class="text-sm font-semibold text-red-400">Danger Zone</h2>
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <p class="text-sm text-slate-300">Delete account</p>
+              <p class="text-xs text-slate-500 mt-0.5">Permanently delete your account and all data. This cannot be undone.</p>
+            </div>
+            <button class="border border-red-700/50 text-red-400 hover:bg-red-900/20 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-500 flex-shrink-0 self-start sm:self-auto">Delete account</button>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 z-20 hidden lg:hidden" aria-hidden="true"></div>
+  <script>
+    const sidebar=document.getElementById('sidebar'),toggle=document.getElementById('sidebarToggle'),overlay=document.getElementById('sidebarOverlay');
+    toggle.addEventListener('click',()=>{const o=!sidebar.classList.contains('-translate-x-full');sidebar.classList.toggle('-translate-x-full',o);overlay.classList.toggle('hidden',o);toggle.setAttribute('aria-expanded',String(!o));});
+    overlay.addEventListener('click',()=>{sidebar.classList.add('-translate-x-full');overlay.classList.add('hidden');toggle.setAttribute('aria-expanded','false');});
+
+    // Toggle switches
+    document.querySelectorAll('[role="switch"]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const checked = btn.getAttribute('aria-checked') === 'true';
+        btn.setAttribute('aria-checked', String(!checked));
+        const knob = btn.querySelector('span');
+        if (!checked) {
+          btn.classList.replace('bg-blue-900/40', 'bg-blue-600');
+          knob.classList.replace('translate-x-1', 'translate-x-6');
+          knob.classList.replace('bg-slate-400', 'bg-white');
+        } else {
+          btn.classList.replace('bg-blue-600', 'bg-blue-900/40');
+          knob.classList.replace('translate-x-6', 'translate-x-1');
+          knob.classList.replace('bg-white', 'bg-slate-400');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

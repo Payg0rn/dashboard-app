@@ -280,15 +280,9 @@ function buildEnergyChart() {
   const canvas = document.getElementById('energyChart')
   const ctx = canvas.getContext('2d')
 
-  const grad = ctx.createLinearGradient(0, 0, 0, 220)
+  const grad = ctx.createLinearGradient(0, 0, 0, canvas.offsetHeight || 220)
   grad.addColorStop(0, 'rgba(59,130,246,0.35)')
   grad.addColorStop(1, 'rgba(59,130,246,0.01)')
-
-  const labels = Array.from({ length: 24 }, (_, i) => {
-    if (i === 0) return '12am'
-    if (i === 12) return '12pm'
-    return i < 12 ? `${i}am` : `${i - 12}pm`
-  })
 
   const nowHour = new Date().getHours() + new Date().getMinutes() / 60
 
@@ -340,9 +334,8 @@ function buildEnergyChart() {
   energyChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels,
       datasets: [{
-        data: ENERGY_CURVE,
+        data: ENERGY_CURVE.map((v, i) => ({ x: i, y: v })),
         borderColor: 'rgba(59,130,246,0.9)',
         borderWidth: 2.5,
         backgroundColor: grad,
@@ -368,20 +361,21 @@ function buildEnergyChart() {
           titleFont: { family: '"Fira Code", monospace', size: 11 },
           bodyFont: { family: '"Fira Code", monospace', size: 12 },
           callbacks: {
-            title: items => items[0].label,
-            label: item => `Energy: ${item.raw}%`
+            title: items => {
+              const h = items[0].parsed.x
+              if (h === 0) return '12am'
+              if (h === 12) return '12pm'
+              return h < 12 ? `${h}am` : `${h-12}pm`
+            },
+            label: item => `Energy: ${item.parsed.y}%`
           }
         }
       },
       scales: {
         x: {
-          grid: { color: 'rgba(255,255,255,0.04)', drawBorder: false },
-          ticks: {
-            color: '#4b5563', font: { family: '"Fira Code"', size: 10 },
-            maxTicksLimit: 12, maxRotation: 0
-          },
           type: 'linear',
           min: 0, max: 23,
+          grid: { color: 'rgba(255,255,255,0.04)' },
           ticks: {
             color: '#4b5563', font: { family: '"Fira Code"', size: 10 },
             stepSize: 2, maxRotation: 0,
@@ -394,7 +388,7 @@ function buildEnergyChart() {
         },
         y: {
           min: 0, max: 100,
-          grid: { color: 'rgba(255,255,255,0.04)', drawBorder: false },
+          grid: { color: 'rgba(255,255,255,0.04)' },
           ticks: {
             color: '#4b5563', font: { family: '"Fira Code"', size: 10 },
             stepSize: 25,

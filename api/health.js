@@ -35,7 +35,8 @@ export default async function handler(req, res) {
       const srcMetrics = parsed?.data?.metrics ?? parsed?.metrics ?? []
       const metrics = parseMetrics(srcMetrics)
       const hourlyEnergy = buildHourlyEnergy(srcMetrics)
-      const snapshot = { receivedAt: new Date().toISOString(), metrics, hourlyEnergy }
+      const sleepNights  = buildSleepNights(srcMetrics)
+      const snapshot = { receivedAt: new Date().toISOString(), metrics, hourlyEnergy, sleepNights }
 
       const r = await fetch(
         `https://api.vercel.com/v1/edge-config/${EC_ID}/items?teamId=${TEAM_ID}`,
@@ -162,4 +163,116 @@ function groupByHour(dataArr, today) {
 function parseHour(dateStr) {
   const m = dateStr.match(/[\sT](\d{2}):\d{2}/)
   return m ? parseInt(m[1], 10) : null
+}
+
+// Parse wall-clock date/time from a Health Auto Export timestamp string.
+// Returns { date:"YYYY-MM-DD", hour, minute, ms } treating local wall-clock as-is.
+function parseSleepDt(dateStr) {
+  const m = dateStr.match(/^(\d{4}-\d{2}-\d{2})[\sT](\d{2}):(\d{2})/)
+  if (!m) return null
+  const hour = parseInt(m[2], 10), minute = parseInt(m[3], 10)
+  // Use synthetic ISO (no tz) so Date parses it as local — consistent across all entries
+  const ms = new Date(`${m[1]}T${m[2]}:${m[3]}:00`).getTime()
+  return { date: m[1], hour, minute, ms }
+}
+
+// Build per-night sleep records from raw sleep_analysis + physiological metric samples.
+// Returns an array of nights (most-recent first, max 14) each with:
+//   date, bed, wake, inBed (min), asleep (min), awake/rem/core/deep (min),
+//   avgHR, minHR, hrv, resp, spo2, wristT  (null when not available)
+function buildSleepNights(srcMetrics) {
+  const findRaw = name => srcMetrics.find(m => m.name === name)?.data ?? []
+
+  const sleepRaw = findRaw('sleep_analysis')
+  const hrRaw    = findRaw('heart_rate')
+  const hrvRaw   = findRaw('heart_rate_variability_sdnn')
+  const respRaw  = findRaw('respiratory_rate')
+  const spo2Raw  = findRaw('blood_oxygen_saturation')
+  // Apple Watch sleep wrist temp (recorded nightly during sleep tracking)
+  const wristRaw = findRaw('apple_sleeping_wrist_temperature').length
+    ? findRaw('apple_sleeping_wrist_temperature')
+    : findRaw('wrist_temperature')
+
+  const STAGE_MAP = {
+    HKCategoryValueSleepAnalysisInBed:            'inBed',
+    HKCategoryValueSleepAnalysisAsleepUnspecified: 'core',
+    HKCategoryValueSleepAnalysisAsleepCore:        'core',
+    HKCategoryValueSleepAnalysisAsleepREM:         'rem',
+    HKCategoryValueSleepAnalysisAsleepDeep:        'deep',
+    HKCategoryValueSleepAnalysisAwake:             'awake',
+  }
+
+  // Group sleep stage entries by "night" key (YYYY-MM-DD of the evening side).
+  // 18:00–23:59 → night of that date; 00:00–13:59 → night of previous date.
+  const nightMap = {}
+  for (const entry of sleepRaw) {
+    const p = parseSleepDt(entry.date ?? '')
+    if (!p) continue
+    let nightKey
+    if (p.hour >= 18) {
+      nightKey = p.date
+    } else if (p.hour < 14) {
+      const d = new Date(`${p.date}T12:00:00`)
+      d.setDate(d.getDate() - 1)
+      nightKey = d.toISOString().slice(0, 10)
+    } else {
+      continue // 14–18 h gap — ambiguous, skip
+    }
+    if (!nightMap[nightKey]) nightMap[nightKey] = []
+    nightMap[nightKey].push(entry)
+  }
+
+  const keys = Object.keys(nightMap).sort().reverse().slice(0, 14)
+
+  const avg = arr => arr.length ? Math.round(arr.reduce((s, v) => s + v, 0) / arr.length * 10) / 10 : null
+  const mn  = arr => arr.length ? Math.round(Math.min(...arr) * 10) / 10 : null
+
+  return keys.map(nightKey => {
+    const entries = nightMap[nightKey]
+    let earliest = null, latest = null
+    const stageMins = { inBed: 0, awake: 0, rem: 0, core: 0, deep: 0 }
+
+    for (const e of entries) {
+      const p = parseSleepDt(e.date ?? '')
+      if (!p) continue
+      const durMins = Math.round((e.qty ?? 0) * 60)
+      const endMs = p.ms + durMins * 60000
+      if (earliest === null || p.ms < earliest) earliest = p.ms
+      if (latest   === null || endMs > latest)  latest   = endMs
+      const stage = STAGE_MAP[e.value ?? ''] ?? 'core'
+      stageMins[stage] += durMins
+    }
+
+    if (earliest === null) return null
+
+    const bedDt  = new Date(earliest)
+    const wakeDt = new Date(latest)
+    const fmt2   = n => String(n).padStart(2, '0')
+    const inBedMins  = Math.round((latest - earliest) / 60000)
+    const asleepMins = stageMins.rem + stageMins.core + stageMins.deep
+
+    // Collect physiological readings that fall within the sleep window
+    const winVals = raw => raw
+      .filter(d => { const p = parseSleepDt(d.date ?? ''); return p && p.ms >= earliest && p.ms <= latest })
+      .map(d => d.qty ?? d.Avg ?? d.value ?? null)
+      .filter(v => v != null)
+
+    return {
+      date:   nightKey,
+      bed:    `${fmt2(bedDt.getHours())}:${fmt2(bedDt.getMinutes())}`,
+      wake:   `${fmt2(wakeDt.getHours())}:${fmt2(wakeDt.getMinutes())}`,
+      inBed:  inBedMins,
+      asleep: asleepMins,
+      awake:  stageMins.awake,
+      rem:    stageMins.rem,
+      core:   stageMins.core,
+      deep:   stageMins.deep,
+      avgHR:  avg(winVals(hrRaw)),
+      minHR:  mn(winVals(hrRaw)),
+      hrv:    avg(winVals(hrvRaw)),
+      resp:   avg(winVals(respRaw)),
+      spo2:   avg(winVals(spo2Raw)),
+      wristT: avg(winVals(wristRaw)),
+    }
+  }).filter(Boolean)
 }

@@ -68,20 +68,6 @@
 
     <main id="main" class="flex-1 p-4 lg:p-6 space-y-6">
 
-      <!-- Apple Watch Stats -->
-      <section aria-labelledby="health-title" class="bg-[#111827] border border-blue-900/30 rounded-xl p-4">
-        <div class="flex items-center justify-between mb-3">
-          <div class="flex items-center gap-2">
-            <h2 id="health-title" class="text-xs font-mono font-semibold text-slate-200 uppercase tracking-wider">Apple Watch</h2>
-            <span id="health-live" class="hidden w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-dot"></span>
-          </div>
-          <span id="health-updated" class="text-xs font-mono text-slate-600"></span>
-        </div>
-        <div id="health-metrics" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-2">
-          <div class="col-span-full text-xs text-slate-600 font-mono py-1">Connecting to Apple Watch…</div>
-        </div>
-      </section>
-
       <!-- Energy & Schedule -->
       <section aria-labelledby="energy-title" class="bg-[#111827] border border-blue-900/30 rounded-xl p-6">
         <div class="flex items-start justify-between mb-4 flex-wrap gap-3">
@@ -169,6 +155,61 @@
           <button onclick="addTodo('monthly')" class="px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Add goal">+</button>
         </div>
         <ul id="monthly-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1.5" aria-label="Monthly goals" aria-live="polite"></ul>
+      </section>
+
+      <!-- Health & Recovery (Apple Watch data — pinned at bottom) -->
+      <section aria-labelledby="health-title" class="bg-[#111827] border border-blue-900/30 rounded-xl p-4 space-y-4">
+
+        <!-- Watch live metrics row -->
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <h2 id="health-title" class="text-xs font-mono font-semibold text-slate-200 uppercase tracking-wider">Health &amp; Recovery</h2>
+              <span id="health-live" class="hidden w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-dot"></span>
+            </div>
+            <span id="health-updated" class="text-xs font-mono text-slate-600"></span>
+          </div>
+          <div id="health-metrics" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-2">
+            <div class="col-span-full text-xs text-slate-600 font-mono py-1">Connecting to Apple Watch…</div>
+          </div>
+        </div>
+
+        <!-- Sleep Tracker -->
+        <div id="sleep-section" class="hidden">
+          <div class="border-t border-blue-900/30 pt-4">
+            <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+              <div class="flex items-center gap-3">
+                <h3 class="text-xs font-mono font-semibold text-slate-200 uppercase tracking-wider">Sleep Tracker</h3>
+                <!-- Summary stats -->
+                <div id="sleep-summary" class="flex items-center gap-3 text-xs font-mono"></div>
+              </div>
+              <!-- 7 / 30 toggle -->
+              <div class="flex items-center gap-1 bg-[#0A0F1E] rounded-lg p-0.5 border border-blue-900/40">
+                <button id="sleep-btn-7"  onclick="setSleepWindow(7)"  class="px-3 py-1 rounded-md text-xs font-mono transition-colors">7 nights</button>
+                <button id="sleep-btn-30" onclick="setSleepWindow(30)" class="px-3 py-1 rounded-md text-xs font-mono transition-colors">30 nights</button>
+              </div>
+            </div>
+
+            <!-- Stage legend -->
+            <div class="flex items-center gap-3 mb-3 text-xs font-mono text-slate-500 flex-wrap">
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm inline-block" style="background:#4f46e5"></span>Deep</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm inline-block" style="background:#7c3aed"></span>REM</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm inline-block" style="background:#2563eb"></span>Core</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm inline-block" style="background:#dc2626"></span>Awake</span>
+            </div>
+
+            <!-- Column headers -->
+            <div class="hidden lg:grid text-xs font-mono text-slate-600 mb-1 px-2" style="grid-template-columns:80px 1fr 64px 90px 110px 56px 46px 46px 46px 46px 50px">
+              <span>Date</span><span>Stages</span><span class="text-right">Total</span><span class="pl-2">Bed → Wake</span>
+              <span class="pl-2">Awake/REM/Core/Deep</span>
+              <span class="text-right">HR</span><span class="text-right">HRV</span><span class="text-right">Resp</span><span class="text-right">SpO₂</span><span class="text-right">°WT</span><span></span>
+            </div>
+
+            <!-- Night rows -->
+            <div id="sleep-rows" class="space-y-1"></div>
+          </div>
+        </div>
+
       </section>
 
     </main>
@@ -267,6 +308,7 @@ async function loadWatchData() {
     if (snap.receivedAt) document.getElementById('health-updated').textContent = `synced ${new Date(snap.receivedAt).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}`
 
     if (snap.hourlyEnergy) updateEnergyChart(snap.hourlyEnergy)
+    if (snap.sleepNights)  renderSleepPanel(snap.sleepNights)
   } catch {}
 }
 
@@ -288,6 +330,130 @@ function updateEnergyChart(hourlyEnergy) {
   }))
 
   energyChart.update('none')
+}
+
+// ── Sleep Tracker ──────────────────────────────────────
+let sleepAllNights = []
+let sleepWindow = 7
+
+function setSleepWindow(n) {
+  sleepWindow = n
+  document.getElementById('sleep-btn-7').className  = `px-3 py-1 rounded-md text-xs font-mono transition-colors ${n===7  ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-slate-200'}`
+  document.getElementById('sleep-btn-30').className = `px-3 py-1 rounded-md text-xs font-mono transition-colors ${n===30 ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-slate-200'}`
+  renderSleepRows()
+}
+
+function fmtMins(m) {
+  if (m == null || isNaN(m)) return '—'
+  const h = Math.floor(m / 60), mn = m % 60
+  return h > 0 ? `${h}h${mn > 0 ? mn + 'm' : ''}` : `${mn}m`
+}
+function fmtVal(v, dec) {
+  return v == null ? '—' : (dec ? v.toFixed(dec) : Math.round(v))
+}
+
+function renderSleepSummary(nights) {
+  const el = document.getElementById('sleep-summary')
+  if (!nights.length) { el.innerHTML = '<span class="text-slate-600">No sleep data yet</span>'; return }
+  const recent7 = nights.slice(0, 7)
+  const prev7   = nights.slice(7, 14)
+  const avg7 = arr => arr.length ? Math.round(arr.reduce((s,n)=>s+n,0)/arr.length) : 0
+  const avgAsleep = avg7(recent7.map(n=>n.asleep))
+  const avgDeepRem = avg7(recent7.map(n=>n.asleep>0 ? Math.round((n.deep+n.rem)/n.asleep*100) : 0))
+  const prevAvg = avg7(prev7.map(n=>n.asleep))
+  const trend = prev7.length === 0 ? '' : avgAsleep > prevAvg + 5 ? ' ↑' : avgAsleep < prevAvg - 5 ? ' ↓' : ' →'
+  const trendCol = trend === ' ↑' ? 'text-emerald-400' : trend === ' ↓' ? 'text-red-400' : 'text-slate-500'
+  el.innerHTML = `
+    <span class="text-slate-300">7-night avg: <span class="text-blue-300 font-semibold">${fmtMins(avgAsleep)}</span></span>
+    <span class="text-slate-500">·</span>
+    <span class="text-slate-300">Deep+REM: <span class="text-violet-400 font-semibold">${avgDeepRem}%</span></span>
+    ${trend ? `<span class="text-slate-500">·</span><span class="${trendCol} font-semibold">Trend${trend}</span>` : ''}
+  `
+}
+
+function renderSleepRows() {
+  const nights = sleepAllNights.slice(0, sleepWindow)
+  const container = document.getElementById('sleep-rows')
+  container.innerHTML = ''
+  if (!nights.length) {
+    container.innerHTML = '<div class="text-xs text-slate-600 font-mono py-2">No sleep data received yet — check Health Auto Export is posting to /api/health</div>'
+    return
+  }
+
+  nights.forEach(n => {
+    const total   = n.inBed || 0
+    const deepPct = total > 0 ? (n.deep  / total * 100).toFixed(0) : 0
+    const remPct  = total > 0 ? (n.rem   / total * 100).toFixed(0) : 0
+    const corePct = total > 0 ? (n.core  / total * 100).toFixed(0) : 0
+    const awakePct= total > 0 ? (n.awake / total * 100).toFixed(0) : 0
+    const short   = n.asleep < 360 && n.asleep > 0  // flag < 6h
+
+    // Format date: "Mon 09 Jun"
+    const d = new Date(n.date + 'T12:00:00')
+    const dateLabel = d.toLocaleDateString('en-GB', { weekday:'short', day:'2-digit', month:'short' })
+
+    // Stacked bar segments (flex, percentage widths)
+    const bar = `
+      <div class="flex h-4 rounded overflow-hidden gap-px w-full" style="min-width:60px">
+        ${n.deep  > 0 ? `<div title="Deep ${fmtMins(n.deep)}"  style="width:${deepPct}%;background:#4f46e5" class="flex-shrink-0"></div>` : ''}
+        ${n.rem   > 0 ? `<div title="REM ${fmtMins(n.rem)}"    style="width:${remPct}%;background:#7c3aed"  class="flex-shrink-0"></div>` : ''}
+        ${n.core  > 0 ? `<div title="Core ${fmtMins(n.core)}"  style="width:${corePct}%;background:#2563eb" class="flex-shrink-0"></div>` : ''}
+        ${n.awake > 0 ? `<div title="Awake ${fmtMins(n.awake)}" style="width:${awakePct}%;background:#dc2626" class="flex-shrink-0"></div>` : ''}
+        <div class="flex-1" style="background:#1e3a5f"></div>
+      </div>`
+
+    const stagesPct = `<span style="color:#818cf8">${deepPct}%</span>/<span style="color:#a78bfa">${remPct}%</span>/<span style="color:#60a5fa">${corePct}%</span>/<span style="color:#f87171">${awakePct}%</span>`
+
+    const wristStr = n.wristT != null ? (n.wristT >= 0 ? `+${n.wristT.toFixed(1)}` : n.wristT.toFixed(1)) : '—'
+
+    const row = document.createElement('div')
+    row.className = `rounded-lg px-2 py-1.5 ${short ? 'bg-red-950/40 border border-red-900/40' : 'bg-[#0A0F1E]/60'}`
+
+    // Mobile layout (single row, compact)
+    row.innerHTML = `
+      <!-- Mobile -->
+      <div class="lg:hidden space-y-1">
+        <div class="flex items-center justify-between gap-2">
+          <span class="font-mono text-xs text-slate-300 flex-shrink-0">${dateLabel}</span>
+          ${short ? '<span class="text-xs font-mono text-red-400 font-bold">⚠ &lt;6h</span>' : ''}
+          <span class="font-mono text-xs text-blue-300 font-semibold">${fmtMins(n.asleep)}</span>
+          <span class="font-mono text-xs text-slate-500">${n.bed}→${n.wake}</span>
+        </div>
+        <div class="w-full">${bar}</div>
+        <div class="flex gap-3 text-xs font-mono flex-wrap">
+          <span class="text-slate-500">Stages: ${stagesPct}</span>
+          ${n.avgHR  != null ? `<span class="text-slate-500">HR <span class="text-pink-300">${fmtVal(n.avgHR)}/${fmtVal(n.minHR)}</span></span>` : ''}
+          ${n.hrv    != null ? `<span class="text-slate-500">HRV <span class="text-emerald-300">${fmtVal(n.hrv)}ms</span></span>` : ''}
+          ${n.resp   != null ? `<span class="text-slate-500">Resp <span class="text-sky-300">${fmtVal(n.resp,1)}</span></span>` : ''}
+          ${n.spo2   != null ? `<span class="text-slate-500">SpO₂ <span class="text-teal-300">${fmtVal(n.spo2,1)}%</span></span>` : ''}
+          ${n.wristT != null ? `<span class="text-slate-500">°WT <span class="text-amber-300">${wristStr}°C</span></span>` : ''}
+        </div>
+      </div>
+      <!-- Desktop grid -->
+      <div class="hidden lg:grid items-center gap-1 text-xs font-mono" style="grid-template-columns:80px 1fr 64px 90px 110px 56px 46px 46px 46px 46px 50px">
+        <span class="text-slate-300 truncate">${dateLabel}${short ? ' <span class="text-red-400 font-bold">⚠</span>' : ''}</span>
+        <div>${bar}</div>
+        <span class="text-right text-blue-300 font-semibold">${fmtMins(n.asleep)}</span>
+        <span class="pl-2 text-slate-400">${n.bed}→${n.wake}</span>
+        <span class="pl-2 text-slate-400">${stagesPct}</span>
+        <span class="text-right text-pink-300">${n.avgHR != null ? fmtVal(n.avgHR)+'/'+fmtVal(n.minHR) : '—'}</span>
+        <span class="text-right text-emerald-300">${n.hrv    != null ? fmtVal(n.hrv)+'ms' : '—'}</span>
+        <span class="text-right text-sky-300">${n.resp   != null ? fmtVal(n.resp,1) : '—'}</span>
+        <span class="text-right text-teal-300">${n.spo2   != null ? fmtVal(n.spo2,1)+'%' : '—'}</span>
+        <span class="text-right text-amber-300">${wristStr != '—' ? wristStr+'°' : '—'}</span>
+        <span></span>
+      </div>
+    `
+    container.appendChild(row)
+  })
+}
+
+function renderSleepPanel(nights) {
+  if (!nights || !nights.length) return
+  sleepAllNights = nights
+  document.getElementById('sleep-section').classList.remove('hidden')
+  renderSleepSummary(nights)
+  setSleepWindow(sleepWindow)
 }
 
 // ── Circadian energy data ──────────────────────────────

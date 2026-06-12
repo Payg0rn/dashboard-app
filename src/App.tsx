@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {
-  PageShell, PosterGrid, Ticker, Card, Ring,
-  Badge, Button, Input, Textarea,
+  PageShell, PosterGrid, Ticker,
+  Badge, Button,
 } from './design-kit'
 import type { PosterConfig } from './design-kit'
 import HealthPage from './HealthPage'
@@ -61,37 +61,7 @@ export default function App() {
 
           <PosterGrid posters={POSTERS} onSelect={id => setSelected(id)} />
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
-            <Card eyebrow="Performance" title="Uptime">
-              <div style={{ display: 'flex', justifyContent: 'center', padding: '1rem 0' }}>
-                <Ring value={98.6} size={160} label="uptime" />
-              </div>
-            </Card>
-
-            <Card eyebrow="Status" title="Services" elevated>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                {[['API', 'accent'], ['Database', 'accent'], ['CDN', 'amber'], ['Auth', 'red']].map(([svc, tone]) => (
-                  <div key={svc} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ color: 'var(--muted-strong)', fontSize: 'var(--text-sm)' }}>{svc}</span>
-                    <Badge tone={tone as any} dot>{tone === 'accent' ? 'Operational' : tone === 'amber' ? 'Degraded' : 'Outage'}</Badge>
-                  </div>
-                ))}
-              </div>
-            </Card>
-
-            <Card eyebrow="Quick action" title="Send report" interactive>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <Input label="Recipient" placeholder="team@company.com" name="recipient" />
-                <Textarea label="Note" placeholder="Optional message..." name="note" />
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  <Button variant="primary">Send</Button>
-                  <Button variant="ghost">Cancel</Button>
-                </div>
-              </div>
-            </Card>
-          </div>
-
-          {selected && (
+{selected && (
             <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
               <Badge tone="neutral">Selected</Badge>
               <Badge tone="accent">{selected}</Badge>

@@ -9,10 +9,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Fira Sans','system-ui','sans-serif'],mono:['Fira Code','monospace']}}}}</script>
-  <style>::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:#0D1426}::-webkit-scrollbar-thumb{background:#1E40AF;border-radius:2px}</style>
+  <style>
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:#0D1426}::-webkit-scrollbar-thumb{background:#1E40AF;border-radius:2px}
+    .chip{cursor:pointer;user-select:none;transition:filter 0.1s}
+    .chip:hover{filter:brightness(1.25)}
+    .cdot{cursor:pointer;user-select:none}
+    .cdot:hover{opacity:.7}
+    input,select{background:#0A0F1E;border-color:rgba(30,58,138,.4);color:#e2e8f0;font-family:'Fira Code',monospace;font-size:12px}
+    input:focus,select:focus{outline:none;border-color:#3b82f6}
+    input::placeholder{color:#475569}
+  </style>
 </head>
 <body class="bg-[#0A0F1E] text-slate-100 font-sans">
 <div class="flex h-screen overflow-hidden">
+
   <aside id="sidebar" class="w-64 bg-[#0D1426] border-r border-blue-900/30 flex flex-col fixed inset-y-0 left-0 z-30 transition-transform duration-200 -translate-x-full lg:translate-x-0">
     <div class="h-16 flex items-center px-6 border-b border-blue-900/30 flex-shrink-0">
       <div class="flex items-center gap-3">
@@ -22,28 +32,508 @@
     </div>
     <nav class="flex-1 overflow-y-auto py-4 px-3">
       <ul class="space-y-0.5" role="list">
-        <li><a href="index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Dashboard</span></a></li>
-        <li><a href="analytics.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg><span>Nutrition</span></a></li>
-        <li><a href="users.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>Finance</span></a></li>
-        <li><a href="orders.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg><span>Gym</span></a></li>
-        <li><a href="reports.html" aria-current="page" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-600/20 text-blue-400 border border-blue-500/20 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg><span>Education</span></a></li>
-        <li><a href="reselling.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg><span>Reselling</span></a></li>
+        <li><a href="index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Dashboard</span></a></li>
+        <li><a href="analytics.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg><span>Nutrition</span></a></li>
+        <li><a href="users.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>Finance</span></a></li>
+        <li><a href="orders.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg><span>Gym</span></a></li>
+        <li><a href="reports.html" aria-current="page" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-600/20 text-blue-400 border border-blue-500/20 font-medium"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg><span>Education</span></a></li>
+        <li><a href="reselling.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg><span>Reselling</span></a></li>
       </ul>
     </nav>
   </aside>
+
   <div class="flex-1 flex flex-col lg:ml-64 min-h-screen overflow-y-auto">
     <header class="h-16 bg-[#0D1426]/80 backdrop-blur-sm border-b border-blue-900/30 flex items-center px-4 gap-4 sticky top-0 z-20 flex-shrink-0">
-      <button id="sidebarToggle" class="lg:hidden p-2 text-slate-400 hover:text-slate-200 hover:bg-blue-900/30 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-      <span class="font-mono text-sm font-semibold text-slate-200">Education</span>
+      <button id="sidebarToggle" class="lg:hidden p-2 text-slate-400 hover:text-slate-200 hover:bg-blue-900/30 rounded-lg transition-colors" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <span class="font-mono text-sm font-semibold text-slate-200">Revision Hub</span>
+      <span class="ml-auto text-xs font-mono text-slate-600" id="last-render"></span>
     </header>
-    <main class="flex-1 p-6"></main>
+    <main class="flex-1 p-3 lg:p-4 space-y-3">
+      <div id="panel-countdown" class="grid grid-cols-2 lg:grid-cols-4 gap-2"></div>
+      <div id="panel-agenda" class="bg-[#111827] border border-blue-900/30 rounded-xl p-3"></div>
+      <div id="panel-progress" class="grid grid-cols-1 xl:grid-cols-3 gap-3"></div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        <div id="panel-recap" class="bg-[#111827] border border-amber-900/40 rounded-xl p-3"></div>
+        <div id="panel-gaps"  class="bg-[#111827] border border-red-900/40 rounded-xl p-3"></div>
+      </div>
+      <div id="panel-papers" class="bg-[#111827] border border-blue-900/30 rounded-xl p-3"></div>
+    </main>
   </div>
 </div>
 <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 z-20 hidden lg:hidden"></div>
+
 <script>
-  const s=document.getElementById('sidebar'),t=document.getElementById('sidebarToggle'),o=document.getElementById('sidebarOverlay');
-  t.addEventListener('click',()=>{const open=!s.classList.contains('-translate-x-full');s.classList.toggle('-translate-x-full',open);o.classList.toggle('hidden',open);t.setAttribute('aria-expanded',String(!open))});
-  o.addEventListener('click',()=>{s.classList.add('-translate-x-full');o.classList.add('hidden');t.setAttribute('aria-expanded','false')});
+// ═══════════════════════════════════════════════════════════════
+// CONFIG — edit topic lists here without touching markup
+// ═══════════════════════════════════════════════════════════════
+
+const EXAM_DATES = [
+  { id: 'bus',    label: 'Business Mock',  subj: 'business',  date: '2026-06-22' },
+  { id: 'econ',   label: 'Economics Mock', subj: 'economics', date: '2026-06-23' },
+  { id: 'maths1', label: 'Maths Paper 1',  subj: 'maths',     date: '2026-06-22' },
+  { id: 'maths2', label: 'Maths Paper 2',  subj: 'maths',     date: '2026-06-26' },
+]
+
+// status: 'not-started' | 'in-progress' | 'covered' | 'needs-recap'
+// conf:   1–5 or null
+const CONFIG = {
+  business: {
+    name: 'Edexcel Business', abbr: 'Bus',
+    topics: [
+      { id:'b01', name:'Markets',               spec:'1.1.1', status:'covered',     lastCovered:'2026-06-05', conf:4 },
+      { id:'b02', name:'Market research',        spec:'1.1.2', status:'covered',     lastCovered:'2026-06-05', conf:4 },
+      { id:'b03', name:'Segmentation',           spec:'1.1.3', status:'covered',     lastCovered:'2026-06-06', conf:3 },
+      { id:'b04', name:'Marketing mix',          spec:'1.2.1', status:'covered',     lastCovered:'2026-06-06', conf:4 },
+      { id:'b05', name:'Pricing strategies',     spec:'1.2.2', status:'covered',     lastCovered:'2026-06-07', conf:4 },
+      { id:'b06', name:'Distribution',           spec:'1.2.3', status:'covered',     lastCovered:'2026-06-07', conf:3 },
+      { id:'b07', name:'Marketing strategy',     spec:'1.2.4', status:'covered',     lastCovered:'2026-06-08', conf:3 },
+      { id:'b08', name:'Staffing approaches',    spec:'2.1.1', status:'covered',     lastCovered:'2026-06-08', conf:4 },
+      { id:'b09', name:'Recruitment & training', spec:'2.1.2', status:'covered',     lastCovered:'2026-06-09', conf:4 },
+      { id:'b10', name:'Motivation theory',      spec:'2.1.3', status:'covered',     lastCovered:'2026-06-09', conf:4 },
+      { id:'b11', name:'Internal finance',       spec:'2.2.3', status:'covered',     lastCovered:'2026-06-10', conf:3 },
+      { id:'b12', name:'External finance',       spec:'2.2.3', status:'covered',     lastCovered:'2026-06-10', conf:3 },
+      { id:'b13', name:'Sales forecasting',      spec:'2.2.1', status:'not-started', lastCovered:null,         conf:null },
+      { id:'b14', name:'Sales revenue & costs',  spec:'2.2.2', status:'not-started', lastCovered:null,         conf:null },
+      { id:'b15', name:'Budgets',                spec:'2.2.4', status:'not-started', lastCovered:null,         conf:null },
+      { id:'b16', name:'Profit',                 spec:'2.3.1', status:'not-started', lastCovered:null,         conf:null },
+      { id:'b17', name:'Liquidity',              spec:'2.3.2', status:'not-started', lastCovered:null,         conf:null },
+      { id:'b18', name:'Production & efficiency',spec:'2.4.1', status:'not-started', lastCovered:null,         conf:null },
+      { id:'b19', name:'Economic influences',    spec:'2.5.1', status:'not-started', lastCovered:null,         conf:null },
+      { id:'b20', name:'Competitive environment',spec:'2.5.3', status:'not-started', lastCovered:null,         conf:null },
+    ]
+  },
+  economics: {
+    name: 'OCR Economics', abbr: 'Econ',
+    topics: [
+      { id:'e01', name:'Cyclical deficits',             spec:'', status:'covered',     lastCovered:'2026-06-04', conf:4 },
+      { id:'e02', name:'Structural deficits',           spec:'', status:'covered',     lastCovered:'2026-06-04', conf:3 },
+      { id:'e03', name:'Fiscal policy',                 spec:'', status:'covered',     lastCovered:'2026-06-05', conf:4 },
+      { id:'e04', name:'Automatic stabilisers',         spec:'', status:'covered',     lastCovered:'2026-06-05', conf:4 },
+      { id:'e05', name:'Crowding out',                  spec:'', status:'covered',     lastCovered:'2026-06-06', conf:3 },
+      { id:'e06', name:'Demand-pull inflation',         spec:'', status:'covered',     lastCovered:'2026-06-07', conf:4 },
+      { id:'e07', name:'Cost-push inflation',           spec:'', status:'covered',     lastCovered:'2026-06-07', conf:4 },
+      { id:'e08', name:'Phillips curve SR/LR',          spec:'', status:'covered',     lastCovered:'2026-06-08', conf:3 },
+      { id:'e09', name:'Unemployment & hysteresis',     spec:'', status:'covered',     lastCovered:'2026-06-09', conf:3 },
+      { id:'e10', name:'Index numbers & weighted idx',  spec:'', status:'covered',     lastCovered:'2026-06-10', conf:3 },
+      { id:'e11', name:'GDP & GDP per capita',          spec:'', status:'covered',     lastCovered:'2026-06-11', conf:4 },
+      { id:'e12', name:'GDP limitations',               spec:'', status:'covered',     lastCovered:'2026-06-11', conf:3 },
+      { id:'e13', name:'Causes of economic growth',     spec:'', status:'covered',     lastCovered:'2026-06-12', conf:3 },
+      { id:'e14', name:'Consequences of growth',        spec:'', status:'covered',     lastCovered:'2026-06-12', conf:3 },
+      { id:'e15', name:'AD/AS model',                   spec:'', status:'not-started', lastCovered:null,         conf:null },
+      { id:'e16', name:'Monetary policy',               spec:'', status:'not-started', lastCovered:null,         conf:null },
+      { id:'e17', name:'Exchange rates',                spec:'', status:'not-started', lastCovered:null,         conf:null },
+      { id:'e18', name:'Current account',               spec:'', status:'not-started', lastCovered:null,         conf:null },
+      { id:'e19', name:'Supply-side policies',          spec:'', status:'not-started', lastCovered:null,         conf:null },
+    ]
+  },
+  maths: {
+    name: 'AQA Maths', abbr: 'Maths',
+    topics: [
+      { id:'m01', name:'SUVAT',                      spec:'Mech', status:'covered',      lastCovered:'2026-06-03', conf:4 },
+      { id:'m02', name:'Forces',                     spec:'Mech', status:'covered',      lastCovered:'2026-06-04', conf:4 },
+      { id:'m03', name:'Connected particles',        spec:'Mech', status:'covered',      lastCovered:'2026-06-05', conf:3 },
+      { id:'m04', name:'Variable acceleration',      spec:'Mech', status:'covered',      lastCovered:'2026-06-06', conf:3 },
+      { id:'m05', name:'Slopes',                     spec:'Mech', status:'covered',      lastCovered:'2026-06-07', conf:4 },
+      { id:'m06', name:'Lifts',                      spec:'Mech', status:'covered',      lastCovered:'2026-06-08', conf:3 },
+      { id:'m07', name:'Pulleys',                    spec:'Mech', status:'covered',      lastCovered:'2026-06-09', conf:3 },
+      { id:'m08', name:'Vectors',                    spec:'Mech', status:'covered',      lastCovered:'2026-06-10', conf:3 },
+      { id:'m09', name:'Free body diagrams',         spec:'Mech', status:'needs-recap',  lastCovered:'2026-06-01', conf:2 },
+      { id:'m10', name:'Modelling assumptions',      spec:'Mech', status:'needs-recap',  lastCovered:'2026-06-01', conf:2 },
+      { id:'m11', name:"Newton's 2nd law (vert.)",   spec:'Mech', status:'needs-recap',  lastCovered:'2026-06-02', conf:2 },
+      { id:'m12', name:'Vector distance',            spec:'Mech', status:'needs-recap',  lastCovered:'2026-06-02', conf:2 },
+      { id:'m13', name:'Integration w/ constants',   spec:'Mech', status:'needs-recap',  lastCovered:'2026-06-03', conf:2 },
+      { id:'m14', name:'Differentiation',            spec:'Pure', status:'covered',      lastCovered:'2026-06-11', conf:4 },
+      { id:'m15', name:'Definite integrals',         spec:'Pure', status:'covered',      lastCovered:'2026-06-11', conf:3 },
+      { id:'m16', name:'Area under curves',          spec:'Pure', status:'covered',      lastCovered:'2026-06-12', conf:3 },
+      { id:'m17', name:'Trigonometric identities',   spec:'Pure', status:'not-started',  lastCovered:null,         conf:null },
+      { id:'m18', name:'Binomial expansion',         spec:'Pure', status:'not-started',  lastCovered:null,         conf:null },
+      { id:'m19', name:'Parametric equations',       spec:'Pure', status:'not-started',  lastCovered:null,         conf:null },
+      { id:'m20', name:'Sequences & series',         spec:'Pure', status:'not-started',  lastCovered:null,         conf:null },
+      { id:'m21', name:'Proof by contradiction',     spec:'Pure', status:'not-started',  lastCovered:null,         conf:null },
+    ]
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════
+
+const SUBJ_KEYS = ['business', 'economics', 'maths']
+const STATUS_CYCLE = ['not-started', 'in-progress', 'covered', 'needs-recap']
+const STATUS_LABEL = { 'not-started':'Not started', 'in-progress':'In progress', 'covered':'Covered', 'needs-recap':'Needs recap' }
+const STATUS_CHIP = {
+  'not-started': 'bg-slate-800/60 text-slate-400 border-slate-700/50',
+  'in-progress':  'bg-blue-900/40 text-blue-300 border-blue-700/50',
+  'covered':      'bg-emerald-900/40 text-emerald-400 border-emerald-800/50',
+  'needs-recap':  'bg-amber-900/40 text-amber-400 border-amber-700/50',
+}
+const STATUS_DOT = {
+  'not-started': '#475569',
+  'in-progress':  '#60a5fa',
+  'covered':      '#34d399',
+  'needs-recap':  '#fbbf24',
+}
+const SUBJ_COLOR = { business: 'blue', economics: 'violet', maths: 'emerald' }
+const SUBJ_BADGE = {
+  business:  'bg-blue-900/40 text-blue-300 border-blue-700/40',
+  economics: 'bg-violet-900/40 text-violet-300 border-violet-700/40',
+  maths:     'bg-emerald-900/40 text-emerald-300 border-emerald-700/40',
+}
+
+function todayStr() { return new Date().toISOString().slice(0,10) }
+function daysUntil(d) { const t=new Date(); t.setHours(0,0,0,0); return Math.ceil((new Date(d)-t)/86400000) }
+function daysSince(d) { if(!d) return null; const t=new Date(); t.setHours(0,0,0,0); return Math.floor((t-new Date(d))/86400000) }
+
+function loadState() {
+  const saved = JSON.parse(localStorage.getItem('revision-hub')||'{}')
+  const st = saved.topics || {}
+  const topics = {}
+  for (const s of SUBJ_KEYS)
+    topics[s] = CONFIG[s].topics.map(t => ({ ...t, ...(st[t.id]||{}) }))
+  return { topics, papers: saved.papers || [] }
+}
+let S = loadState()
+
+function saveState() {
+  const flat = {}
+  for (const s of SUBJ_KEYS)
+    for (const t of S.topics[s])
+      flat[t.id] = { status:t.status, lastCovered:t.lastCovered, conf:t.conf }
+  localStorage.setItem('revision-hub', JSON.stringify({ topics:flat, papers:S.papers }))
+}
+
+// ── Mutations ──────────────────────────────────────────
+
+function cycleStatus(subj, id) {
+  const t = S.topics[subj].find(t=>t.id===id); if(!t) return
+  const i = STATUS_CYCLE.indexOf(t.status)
+  t.status = STATUS_CYCLE[(i+1)%STATUS_CYCLE.length]
+  if (t.status==='covered') t.lastCovered = todayStr()
+  saveState(); render()
+}
+function setConf(subj, id, val) {
+  const t = S.topics[subj].find(t=>t.id===id); if(!t) return
+  t.conf = t.conf===val ? null : val
+  saveState(); render()
+}
+function markRecapped(subj, id) {
+  const t = S.topics[subj].find(t=>t.id===id); if(!t) return
+  t.lastCovered = todayStr()
+  if (t.status==='needs-recap') t.status = 'covered'
+  saveState(); render()
+}
+function addPaper() {
+  const get = id => document.getElementById(id).value.trim()
+  const date=get('pf-date'), subj=get('pf-subj'), paper=get('pf-paper'), score=get('pf-score'), grade=get('pf-grade')
+  if (!date||!subj||!paper) return
+  S.papers.unshift({ id:'p'+Date.now(), date, subj, paper, score, grade })
+  saveState(); render()
+  ;['pf-paper','pf-score','pf-grade'].forEach(id=>document.getElementById(id).value='')
+}
+function deletePaper(id) {
+  S.papers = S.papers.filter(p=>p.id!==id)
+  saveState(); render()
+}
+
+// ── Helpers ───────────────────────────────────────────
+
+function confHtml(subj, id, val) {
+  return [1,2,3,4,5].map(n =>
+    `<span class="cdot w-2 h-2 rounded-sm inline-block ${val!=null&&n<=val?'bg-blue-400':'bg-slate-700'}" onclick="setConf('${subj}','${id}',${n})" title="Confidence ${n}/5"></span>`
+  ).join('')
+}
+
+function allTopicsFlat() {
+  return SUBJ_KEYS.flatMap(s => S.topics[s].map(t=>({...t,subj:s})))
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════════
+
+function renderCountdown() {
+  const sorted = [...EXAM_DATES].sort((a,b)=>new Date(a.date)-new Date(b.date))
+  const nearestDate = sorted[0].date
+  document.getElementById('panel-countdown').innerHTML = EXAM_DATES.map(e => {
+    const d = daysUntil(e.date)
+    const [numCls, borderCls, bgCls] =
+      d<=3  ? ['text-red-400',    'border-red-500/50',    'bg-red-900/20'] :
+      d<=7  ? ['text-amber-400',  'border-amber-500/50',  'bg-amber-900/20'] :
+      d<=14 ? ['text-yellow-400', 'border-yellow-500/40', 'bg-yellow-900/10'] :
+              ['text-blue-400',   'border-blue-900/40',   'bg-[#111827]']
+    const nearest = e.date===nearestDate
+    return `<div class="rounded-xl border ${borderCls} ${bgCls} p-3 relative">
+      ${nearest?'<span class="absolute top-2 right-2 text-[9px] font-mono text-amber-400 uppercase tracking-widest">next</span>':''}
+      <div class="text-[11px] font-mono text-slate-400 leading-tight pr-8">${e.label}</div>
+      <div class="text-4xl font-bold font-mono ${numCls} leading-none mt-1">${d}</div>
+      <div class="text-[10px] font-mono text-slate-500 mt-1">${d===1?'day':'days'} · ${new Date(e.date).toLocaleDateString('en-GB',{day:'numeric',month:'short'})}</div>
+    </div>`
+  }).join('')
+}
+
+function renderAgenda() {
+  const today = todayStr()
+  const all = allTopicsFlat()
+
+  // Most overdue: needs-recap first (oldest), then covered >2d ago (oldest)
+  const needsRecap = all.filter(t=>t.status==='needs-recap').sort((a,b)=>(a.lastCovered||'0')<(b.lastCovered||'0')?-1:1)
+  const overdue    = all.filter(t=>t.status==='covered' && daysSince(t.lastCovered)>2).sort((a,b)=>(a.lastCovered||'0')<(b.lastCovered||'0')?-1:1)
+  const recapTarget = needsRecap[0] || overdue[0]
+
+  // Next new topic per subject
+  const nextNew = {}
+  for (const s of SUBJ_KEYS) {
+    const topics = S.topics[s]
+    nextNew[s] = topics.find(t=>t.status==='in-progress') || topics.find(t=>t.status==='not-started')
+  }
+
+  // Balance: has each subject been touched today?
+  const touchedToday = {}
+  for (const s of SUBJ_KEYS)
+    touchedToday[s] = S.topics[s].some(t=>t.lastCovered===today)
+
+  const allBalanced = SUBJ_KEYS.every(s=>touchedToday[s])
+  const missingSubjs = SUBJ_KEYS.filter(s=>!touchedToday[s]).map(s=>CONFIG[s].abbr)
+
+  const recapRow = recapTarget
+    ? `<div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-amber-400 flex-shrink-0"></span>
+        <span class="text-xs font-mono font-semibold text-amber-300">RECAP</span>
+        <span class="text-xs font-mono text-slate-300">${recapTarget.name}</span>
+        <span class="text-[10px] font-mono text-slate-500">${CONFIG[recapTarget.subj].abbr}</span>
+        ${recapTarget.lastCovered?`<span class="text-[10px] font-mono text-slate-600">${daysSince(recapTarget.lastCovered)}d ago</span>`:''}
+        <button onclick="markRecapped('${recapTarget.subj}','${recapTarget.id}')" class="ml-auto text-[10px] font-mono text-emerald-400 hover:text-emerald-300 border border-emerald-800/40 px-2 py-0.5 rounded">Done ✓</button>
+       </div>`
+    : `<div class="text-xs font-mono text-emerald-400">✓ No overdue recaps</div>`
+
+  const nextRows = SUBJ_KEYS.map(s => {
+    const t = nextNew[s]
+    if (!t) return `<div class="flex items-center gap-2"><span class="text-[10px] font-mono px-1.5 py-0.5 rounded border ${SUBJ_BADGE[s]}">${CONFIG[s].abbr}</span><span class="text-xs font-mono text-emerald-400">All topics covered</span></div>`
+    return `<div class="flex items-center gap-2">
+      <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border ${SUBJ_BADGE[s]}">${CONFIG[s].abbr}</span>
+      <span class="text-xs font-mono text-slate-300">${t.name}</span>
+      ${t.spec?`<span class="text-[10px] font-mono text-slate-600">${t.spec}</span>`:''}
+      <span class="ml-auto text-[10px] font-mono px-1.5 py-0.5 rounded border ${STATUS_CHIP[t.status]}">${STATUS_LABEL[t.status]}</span>
+    </div>`
+  }).join('')
+
+  const balanceRow = allBalanced
+    ? `<div class="text-[10px] font-mono text-emerald-400">✓ All 3 subjects balanced today</div>`
+    : `<div class="text-[10px] font-mono text-amber-400">⚠ Not yet covered today: ${missingSubjs.join(', ')}</div>`
+
+  document.getElementById('panel-agenda').innerHTML = `
+    <div class="flex items-center gap-2 mb-2">
+      <span class="text-xs font-mono font-bold text-slate-200 uppercase tracking-wider">Today's Session</span>
+      <span class="text-[10px] font-mono text-slate-600">${new Date().toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})}</span>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-1.5">
+      <div class="space-y-1.5">
+        <div class="text-[10px] font-mono text-slate-500 uppercase tracking-wider mb-1">Recap priority</div>
+        ${recapRow}
+      </div>
+      <div class="space-y-1.5">
+        <div class="text-[10px] font-mono text-slate-500 uppercase tracking-wider mb-1">Next topics</div>
+        ${nextRows}
+      </div>
+    </div>
+    <div class="mt-2 pt-2 border-t border-slate-800">${balanceRow}</div>`
+}
+
+function renderProgress() {
+  const ORDER = ['not-started','in-progress','covered','needs-recap']
+  const GROUP_LABEL = { 'not-started':'Not started', 'in-progress':'In progress', 'covered':'Covered', 'needs-recap':'Needs recap' }
+
+  document.getElementById('panel-progress').innerHTML = SUBJ_KEYS.map(s => {
+    const topics = S.topics[s]
+    const total   = topics.length
+    const covered = topics.filter(t=>t.status==='covered').length
+    const pct     = total ? Math.round(covered/total*100) : 0
+    const outstanding = topics.filter(t=>t.status==='not-started'||t.status==='in-progress').length
+    const needsRecap  = topics.filter(t=>t.status==='needs-recap').length
+    const c = SUBJ_COLOR[s]
+
+    // Progress bar
+    const barColor = c==='blue'?'bg-blue-500':c==='violet'?'bg-violet-500':'bg-emerald-500'
+    const borderColor = c==='blue'?'border-blue-900/40':c==='violet'?'border-violet-900/40':'border-emerald-900/40'
+    const headColor = c==='blue'?'text-blue-400':c==='violet'?'text-violet-400':'text-emerald-400'
+
+    // Group topics by status
+    const groups = ORDER.map(st => {
+      const ts = topics.filter(t=>t.status===st)
+      if (!ts.length) return ''
+      const chips = ts.map(t =>
+        `<span class="chip inline-flex items-center gap-1 px-1.5 py-0.5 rounded border text-[11px] font-mono ${STATUS_CHIP[t.status]}" onclick="cycleStatus('${s}','${t.id}')" title="${STATUS_LABEL[t.status]} → click to cycle\n${t.lastCovered?'Last: '+t.lastCovered:''}">
+          ${t.spec?`<span class="opacity-40 text-[9px]">${t.spec}</span>`:''}
+          ${t.name}
+        </span>`
+      ).join('')
+      return `<div class="mb-1.5">
+        <div class="text-[9px] font-mono text-slate-600 uppercase tracking-widest mb-1">${GROUP_LABEL[st]} (${ts.length})</div>
+        <div class="flex flex-wrap gap-1">${chips}</div>
+      </div>`
+    }).join('')
+
+    return `<div class="bg-[#111827] border ${borderColor} rounded-xl p-3">
+      <div class="flex items-center justify-between mb-1">
+        <span class="text-xs font-mono font-bold ${headColor}">${CONFIG[s].name}</span>
+        <span class="text-xs font-mono text-slate-400">${covered}/${total}</span>
+      </div>
+      <div class="flex items-center gap-2 mb-0.5">
+        <div class="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+          <div class="${barColor} h-full rounded-full transition-all" style="width:${pct}%"></div>
+        </div>
+        <span class="text-[11px] font-mono text-slate-400 w-8 text-right">${pct}%</span>
+      </div>
+      <div class="text-[10px] font-mono text-slate-600 mb-2">${outstanding} outstanding · ${needsRecap} need recap</div>
+      <div>${groups}</div>
+    </div>`
+  }).join('')
+}
+
+function renderRecap() {
+  const today = todayStr()
+  const items = allTopicsFlat()
+    .filter(t => t.status==='covered' && t.lastCovered && daysSince(t.lastCovered)>2)
+    .sort((a,b)=>(a.lastCovered<b.lastCovered)?-1:1)
+
+  if (!items.length) {
+    document.getElementById('panel-recap').innerHTML = `
+      <div class="text-[10px] font-mono text-amber-400 font-bold uppercase tracking-wider mb-2">Recap Queue (0)</div>
+      <div class="text-xs font-mono text-emerald-400">✓ All covered topics are up to date</div>`
+    return
+  }
+
+  const rows = items.map(t => {
+    const ds = daysSince(t.lastCovered)
+    const urgency = ds>7 ? 'text-red-400' : ds>4 ? 'text-amber-400' : 'text-yellow-400'
+    return `<div class="flex items-center gap-2 py-1 border-b border-slate-800/60 last:border-0">
+      <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border flex-shrink-0 ${SUBJ_BADGE[t.subj]}">${CONFIG[t.subj].abbr}</span>
+      <span class="text-xs font-mono text-slate-300 flex-1 min-w-0 truncate">${t.name}</span>
+      <span class="flex gap-0.5 flex-shrink-0">${confHtml(t.subj,t.id,t.conf)}</span>
+      <span class="text-[10px] font-mono ${urgency} w-10 text-right flex-shrink-0">${ds}d</span>
+      <button onclick="markRecapped('${t.subj}','${t.id}')" class="text-[10px] font-mono text-emerald-400 hover:text-emerald-300 flex-shrink-0 pl-1">✓</button>
+    </div>`
+  }).join('')
+
+  document.getElementById('panel-recap').innerHTML = `
+    <div class="text-[10px] font-mono text-amber-400 font-bold uppercase tracking-wider mb-2">Recap Queue (${items.length}) · &gt;2d rule</div>
+    ${rows}`
+}
+
+function renderGaps() {
+  const items = allTopicsFlat()
+    .filter(t => t.status==='needs-recap' || (t.conf!=null && t.conf<=2))
+    .sort((a,b)=>{
+      if (a.status==='needs-recap'&&b.status!=='needs-recap') return -1
+      if (b.status==='needs-recap'&&a.status!=='needs-recap') return 1
+      return (a.conf||5)-(b.conf||5)
+    })
+
+  if (!items.length) {
+    document.getElementById('panel-gaps').innerHTML = `
+      <div class="text-[10px] font-mono text-red-400 font-bold uppercase tracking-wider mb-2">Gaps & Weaknesses (0)</div>
+      <div class="text-xs font-mono text-emerald-400">✓ No weak areas flagged</div>`
+    return
+  }
+
+  const rows = items.map(t => {
+    const badge = t.status==='needs-recap'
+      ? `<span class="text-[9px] font-mono px-1 py-0.5 rounded bg-amber-900/40 text-amber-400 border border-amber-700/40">recap</span>`
+      : `<span class="text-[9px] font-mono px-1 py-0.5 rounded bg-red-900/40 text-red-400 border border-red-700/40">conf ${t.conf}</span>`
+    return `<div class="flex items-center gap-2 py-1 border-b border-slate-800/60 last:border-0">
+      <span class="text-[10px] font-mono px-1.5 py-0.5 rounded border flex-shrink-0 ${SUBJ_BADGE[t.subj]}">${CONFIG[t.subj].abbr}</span>
+      <span class="text-xs font-mono text-slate-300 flex-1 min-w-0 truncate">${t.name}</span>
+      ${t.spec?`<span class="text-[10px] font-mono text-slate-600">${t.spec}</span>`:''}
+      <span class="flex gap-0.5 flex-shrink-0">${confHtml(t.subj,t.id,t.conf)}</span>
+      ${badge}
+      <button onclick="cycleStatus('${t.subj}','${t.id}')" class="text-[10px] font-mono text-slate-500 hover:text-slate-300 flex-shrink-0 pl-1" title="Cycle status">⟳</button>
+    </div>`
+  }).join('')
+
+  document.getElementById('panel-gaps').innerHTML = `
+    <div class="text-[10px] font-mono text-red-400 font-bold uppercase tracking-wider mb-2">Gaps & Weaknesses (${items.length})</div>
+    ${rows}`
+}
+
+function renderPapers() {
+  // Latest grade per subject
+  const latestGrade = {}
+  const latestScore = {}
+  for (const s of SUBJ_KEYS) {
+    const match = S.papers.find(p=>p.subj===s)
+    if (match) { latestGrade[s]=match.grade; latestScore[s]=match.score }
+  }
+  const gradeCards = SUBJ_KEYS.map(s => {
+    const g = latestGrade[s], sc = latestScore[s]
+    return `<div class="bg-[#0A0F1E]/70 rounded-lg px-3 py-2 flex items-center justify-between">
+      <span class="text-[10px] font-mono text-slate-500">${CONFIG[s].abbr}</span>
+      <span class="text-sm font-mono font-bold text-blue-300">${g||'—'}</span>
+      ${sc?`<span class="text-[10px] font-mono text-slate-600">${sc}</span>`:''}
+    </div>`
+  }).join('')
+
+  const tableRows = S.papers.length
+    ? S.papers.map(p => {
+        const sName = CONFIG[p.subj]?.abbr || p.subj
+        return `<tr class="border-b border-slate-800/60 hover:bg-slate-800/20">
+          <td class="py-1.5 px-2 font-mono text-[11px] text-slate-400 whitespace-nowrap">${p.date}</td>
+          <td class="py-1.5 px-2"><span class="text-[10px] font-mono px-1.5 py-0.5 rounded border ${SUBJ_BADGE[p.subj]||''}">${sName}</span></td>
+          <td class="py-1.5 px-2 font-mono text-[11px] text-slate-300 max-w-[180px] truncate">${p.paper}</td>
+          <td class="py-1.5 px-2 font-mono text-[11px] text-slate-400 text-right">${p.score||'—'}</td>
+          <td class="py-1.5 px-2 font-mono text-[11px] font-bold text-blue-300 text-center">${p.grade||'—'}</td>
+          <td class="py-1.5 px-1 text-right"><button onclick="deletePaper('${p.id}')" class="text-slate-700 hover:text-red-400 text-base leading-none font-mono" title="Delete">×</button></td>
+        </tr>`
+      }).join('')
+    : `<tr><td colspan="6" class="py-3 px-2 text-xs font-mono text-slate-600 text-center">No entries yet</td></tr>`
+
+  document.getElementById('panel-papers').innerHTML = `
+    <div class="flex items-center justify-between mb-2">
+      <span class="text-[10px] font-mono text-blue-400 font-bold uppercase tracking-wider">Past Papers & Essays</span>
+    </div>
+    <div class="grid grid-cols-3 gap-2 mb-3">${gradeCards}</div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-left">
+        <thead><tr class="border-b border-slate-700/50">
+          <th class="pb-1.5 px-2 text-[9px] font-mono text-slate-600 uppercase tracking-wider">Date</th>
+          <th class="pb-1.5 px-2 text-[9px] font-mono text-slate-600 uppercase tracking-wider">Subject</th>
+          <th class="pb-1.5 px-2 text-[9px] font-mono text-slate-600 uppercase tracking-wider">Paper / Question</th>
+          <th class="pb-1.5 px-2 text-[9px] font-mono text-slate-600 uppercase tracking-wider text-right">Score</th>
+          <th class="pb-1.5 px-2 text-[9px] font-mono text-slate-600 uppercase tracking-wider text-center">Grade</th>
+          <th class="pb-1.5 px-1"></th>
+        </tr></thead>
+        <tbody>${tableRows}</tbody>
+      </table>
+    </div>
+    <div class="mt-3 pt-3 border-t border-slate-800 flex flex-wrap gap-2 items-end">
+      <input id="pf-date" type="date" class="rounded px-2 py-1 border text-xs w-32" value="${todayStr()}">
+      <select id="pf-subj" class="rounded px-2 py-1 border text-xs">
+        <option value="business">Business</option>
+        <option value="economics">Economics</option>
+        <option value="maths">Maths</option>
+      </select>
+      <input id="pf-paper" type="text" placeholder="Paper / question…" class="rounded px-2 py-1 border text-xs flex-1 min-w-[140px]">
+      <input id="pf-score" type="text" placeholder="Score" class="rounded px-2 py-1 border text-xs w-20">
+      <input id="pf-grade" type="text" placeholder="Grade" class="rounded px-2 py-1 border text-xs w-20" onkeydown="if(event.key==='Enter')addPaper()">
+      <button onclick="addPaper()" class="px-3 py-1 bg-blue-600 hover:bg-blue-500 text-white text-xs font-mono font-semibold rounded transition-colors">Add</button>
+    </div>`
+}
+
+function render() {
+  renderCountdown()
+  renderAgenda()
+  renderProgress()
+  renderRecap()
+  renderGaps()
+  renderPapers()
+  document.getElementById('last-render').textContent = 'updated ' + new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})
+}
+
+// ── Sidebar toggle ─────────────────────────────────────
+const _s=document.getElementById('sidebar'),_t=document.getElementById('sidebarToggle'),_o=document.getElementById('sidebarOverlay')
+_t.addEventListener('click',()=>{const open=!_s.classList.contains('-translate-x-full');_s.classList.toggle('-translate-x-full',open);_o.classList.toggle('hidden',open);_t.setAttribute('aria-expanded',String(!open))})
+_o.addEventListener('click',()=>{_s.classList.add('-translate-x-full');_o.classList.add('hidden');_t.setAttribute('aria-expanded','false')})
+
+document.addEventListener('DOMContentLoaded', render)
 </script>
 </body>
 </html>

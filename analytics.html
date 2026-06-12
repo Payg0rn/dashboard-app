@@ -1,276 +1,49 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Lock-In — Nutrition</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script>tailwind.config = { theme: { extend: { fontFamily: { sans: ['Fira Sans','system-ui','sans-serif'], mono: ['Fira Code','monospace'] } } } }</script>
-  <style>
-    ::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:#0D1426}::-webkit-scrollbar-thumb{background:#1E40AF;border-radius:2px}
-    @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0.01ms!important;animation-duration:0.01ms!important}}
-  </style>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Fira Sans','system-ui','sans-serif'],mono:['Fira Code','monospace']}}}}</script>
+  <style>::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:#0D1426}::-webkit-scrollbar-thumb{background:#1E40AF;border-radius:2px}</style>
 </head>
-<body class="bg-[#0A0F1E] text-slate-100 font-sans antialiased overflow-x-hidden">
-  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-blue-600 focus:text-white focus:rounded-lg focus:outline-none">Skip to main content</a>
-  <div class="flex h-screen overflow-hidden">
-
-    <!-- SIDEBAR -->
-    <aside id="sidebar" aria-label="Main navigation" class="w-64 bg-[#0D1426] border-r border-blue-900/30 flex flex-col fixed inset-y-0 left-0 z-30 transition-transform duration-200 -translate-x-full lg:translate-x-0">
-      <div class="h-16 flex items-center px-6 border-b border-blue-900/30 flex-shrink-0">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          </div>
-          <span class="font-bold text-lg text-white tracking-tight">The Lock-In</span>
-        </div>
+<body class="bg-[#0A0F1E] text-slate-100 font-sans">
+<div class="flex h-screen overflow-hidden">
+  <aside id="sidebar" class="w-64 bg-[#0D1426] border-r border-blue-900/30 flex flex-col fixed inset-y-0 left-0 z-30 transition-transform duration-200 -translate-x-full lg:translate-x-0">
+    <div class="h-16 flex items-center px-6 border-b border-blue-900/30 flex-shrink-0">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+        <span class="font-bold text-lg text-white tracking-tight">The Lock-In</span>
       </div>
-      <nav class="flex-1 overflow-y-auto py-4 px-3">
-        <div class="mb-6">
-          <p class="text-xs font-medium text-slate-500 uppercase tracking-wider px-3 mb-2">Main</p>
-          <ul class="space-y-0.5" role="list">
-            <li><a href="index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Dashboard</span></a></li>
-            <li><a href="analytics.html" aria-current="page" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-600/20 text-blue-400 border border-blue-500/20 font-medium cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg><span>Nutrition</span></a></li>
-            <li><a href="users.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg><span>Finance</span></a></li>
-            <li><a href="orders.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg><span>Gym</span><span class="ml-auto bg-amber-500 text-[#0A0F1E] text-xs font-bold px-1.5 py-0.5 rounded-full leading-none">12</span></a></li>
-            <li><a href="products.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg><span>Products</span></a></li>
-          </ul>
-        </div>
-        <div>
-          <p class="text-xs font-medium text-slate-500 uppercase tracking-wider px-3 mb-2">System</p>
-          <ul class="space-y-0.5" role="list">
-            <li><a href="reports.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg><span>Education</span></a></li>
-            <li><a href="settings.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>Settings</span></a></li>
-          </ul>
-        </div>
-      </nav>
-      <div class="border-t border-blue-900/30 p-4 flex items-center gap-3 flex-shrink-0">
-        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-bold text-sm flex-shrink-0" aria-hidden="true">LJ</div>
-        <div class="min-w-0 flex-1"><p class="text-sm font-medium text-slate-200 truncate">Leo Standing</p><p class="text-xs text-slate-500 truncate">leojstanding@gmail.com</p></div>
-        <button class="p-1.5 text-slate-500 hover:text-slate-300 hover:bg-blue-900/30 rounded-lg transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Sign out"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg></button>
-      </div>
-    </aside>
-
-    <!-- MAIN -->
-    <div class="flex-1 flex flex-col lg:ml-64 min-h-screen overflow-y-auto">
-      <header class="h-16 bg-[#0D1426]/80 backdrop-blur-sm border-b border-blue-900/30 flex items-center px-4 lg:px-6 gap-4 sticky top-0 z-20 flex-shrink-0">
-        <button id="sidebarToggle" class="lg:hidden p-2 text-slate-400 hover:text-slate-200 hover:bg-blue-900/30 rounded-lg transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-        <div class="flex-1 max-w-xs relative">
-          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-          <input type="search" placeholder="Search..." aria-label="Search" class="w-full bg-[#0A0F1E] border border-blue-900/30 rounded-lg pl-9 pr-4 py-2 text-sm text-slate-300 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
-        </div>
-        <div class="flex items-center gap-2 ml-auto">
-          <button class="relative p-2 text-slate-400 hover:text-slate-200 hover:bg-blue-900/30 rounded-lg transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Notifications"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg><span class="absolute top-1.5 right-1.5 w-2 h-2 bg-amber-500 rounded-full" aria-hidden="true"></span></button>
-          <div class="w-px h-6 bg-blue-900/50 mx-1" aria-hidden="true"></div>
-          <button class="flex items-center gap-2 p-1 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg" aria-label="User menu"><div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-xs font-bold" aria-hidden="true">LJ</div><svg class="w-4 h-4 text-slate-500 hidden sm:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg></button>
-        </div>
-      </header>
-
-      <main id="main-content" class="flex-1 p-4 lg:p-6 space-y-5">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div>
-            <h1 class="text-2xl font-bold text-white">Analytics</h1>
-            <p class="text-slate-400 text-sm mt-0.5">Detailed performance insights</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <select class="bg-[#111827] border border-blue-900/30 text-slate-300 text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer" aria-label="Date range">
-              <option>Last 30 days</option>
-              <option>Last 90 days</option>
-              <option>Last 12 months</option>
-            </select>
-            <button class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-400">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-              Export
-            </button>
-          </div>
-        </div>
-
-        <!-- Stat strip -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div class="bg-[#111827] border border-blue-900/30 rounded-xl p-4">
-            <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">Page Views</p>
-            <p class="text-xl font-bold text-white font-mono">1.24M</p>
-            <p class="text-xs text-emerald-400 mt-1">+22% this month</p>
-          </div>
-          <div class="bg-[#111827] border border-blue-900/30 rounded-xl p-4">
-            <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">Sessions</p>
-            <p class="text-xl font-bold text-white font-mono">284,731</p>
-            <p class="text-xs text-emerald-400 mt-1">+14% this month</p>
-          </div>
-          <div class="bg-[#111827] border border-blue-900/30 rounded-xl p-4">
-            <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">Bounce Rate</p>
-            <p class="text-xl font-bold text-white font-mono">38.2%</p>
-            <p class="text-xs text-red-400 mt-1">+2.1% this month</p>
-          </div>
-          <div class="bg-[#111827] border border-blue-900/30 rounded-xl p-4">
-            <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">Avg. Session</p>
-            <p class="text-xl font-bold text-white font-mono">4m 12s</p>
-            <p class="text-xs text-emerald-400 mt-1">+0:32 this month</p>
-          </div>
-        </div>
-
-        <!-- Charts row -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <section class="bg-[#111827] border border-blue-900/30 rounded-xl p-5" aria-labelledby="user-growth-title">
-            <div class="mb-5">
-              <h2 id="user-growth-title" class="text-sm font-semibold text-slate-200">User Growth</h2>
-              <p class="text-xs text-slate-500 mt-0.5">New vs returning users — last 6 months</p>
-            </div>
-            <div class="h-56">
-              <canvas id="userGrowthChart" role="img" aria-label="Bar chart showing new vs returning users over 6 months"></canvas>
-            </div>
-          </section>
-
-          <section class="bg-[#111827] border border-blue-900/30 rounded-xl p-5" aria-labelledby="conversion-title">
-            <div class="mb-5">
-              <h2 id="conversion-title" class="text-sm font-semibold text-slate-200">Conversion Funnel</h2>
-              <p class="text-xs text-slate-500 mt-0.5">Visitors → sign-up → purchase</p>
-            </div>
-            <div class="space-y-3 pt-2">
-              <div>
-                <div class="flex justify-between text-xs mb-1.5">
-                  <span class="text-slate-400">Visitors</span>
-                  <span class="text-slate-300 font-mono">284,731</span>
-                </div>
-                <div class="w-full bg-blue-900/30 rounded-full h-2.5"><div class="bg-blue-500 h-2.5 rounded-full" style="width:100%"></div></div>
-              </div>
-              <div>
-                <div class="flex justify-between text-xs mb-1.5">
-                  <span class="text-slate-400">Product Views</span>
-                  <span class="text-slate-300 font-mono">142,366</span>
-                </div>
-                <div class="w-full bg-blue-900/30 rounded-full h-2.5"><div class="bg-blue-400 h-2.5 rounded-full" style="width:50%"></div></div>
-              </div>
-              <div>
-                <div class="flex justify-between text-xs mb-1.5">
-                  <span class="text-slate-400">Add to Cart</span>
-                  <span class="text-slate-300 font-mono">42,710</span>
-                </div>
-                <div class="w-full bg-blue-900/30 rounded-full h-2.5"><div class="bg-violet-500 h-2.5 rounded-full" style="width:15%"></div></div>
-              </div>
-              <div>
-                <div class="flex justify-between text-xs mb-1.5">
-                  <span class="text-slate-400">Checkout</span>
-                  <span class="text-slate-300 font-mono">12,483</span>
-                </div>
-                <div class="w-full bg-blue-900/30 rounded-full h-2.5"><div class="bg-amber-500 h-2.5 rounded-full" style="width:4.4%"></div></div>
-              </div>
-              <div>
-                <div class="flex justify-between text-xs mb-1.5">
-                  <span class="text-slate-400">Purchase</span>
-                  <span class="text-slate-300 font-mono">10,448</span>
-                </div>
-                <div class="w-full bg-blue-900/30 rounded-full h-2.5"><div class="bg-emerald-500 h-2.5 rounded-full" style="width:3.67%"></div></div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <!-- Sessions by device + top pages -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <section class="bg-[#111827] border border-blue-900/30 rounded-xl p-5" aria-labelledby="device-title">
-            <h2 id="device-title" class="text-sm font-semibold text-slate-200 mb-4">Sessions by Device</h2>
-            <div class="h-44">
-              <canvas id="deviceChart" role="img" aria-label="Donut chart: device breakdown"></canvas>
-            </div>
-            <ul class="mt-4 space-y-2">
-              <li class="flex items-center justify-between text-xs"><div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-blue-500 flex-shrink-0" aria-hidden="true"></div><span class="text-slate-400">Mobile</span></div><span class="text-slate-300 font-mono">58%</span></li>
-              <li class="flex items-center justify-between text-xs"><div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-violet-500 flex-shrink-0" aria-hidden="true"></div><span class="text-slate-400">Desktop</span></div><span class="text-slate-300 font-mono">34%</span></li>
-              <li class="flex items-center justify-between text-xs"><div class="flex items-center gap-2"><div class="w-2.5 h-2.5 rounded-full bg-amber-500 flex-shrink-0" aria-hidden="true"></div><span class="text-slate-400">Tablet</span></div><span class="text-slate-300 font-mono">8%</span></li>
-            </ul>
-          </section>
-
-          <section class="lg:col-span-2 bg-[#111827] border border-blue-900/30 rounded-xl overflow-hidden" aria-labelledby="top-pages-title">
-            <div class="px-5 py-4 border-b border-blue-900/30">
-              <h2 id="top-pages-title" class="text-sm font-semibold text-slate-200">Top Pages</h2>
-            </div>
-            <table class="w-full" aria-label="Top visited pages">
-              <thead>
-                <tr class="border-b border-blue-900/20 text-left">
-                  <th scope="col" class="px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Page</th>
-                  <th scope="col" class="px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Views</th>
-                  <th scope="col" class="px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Unique</th>
-                  <th scope="col" class="px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Bounce</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-blue-900/20">
-                <tr class="hover:bg-blue-900/10 transition-colors duration-150">
-                  <td class="px-5 py-3 text-sm text-blue-400 font-mono">/home</td>
-                  <td class="px-5 py-3 text-sm text-slate-300 font-mono">84,210</td>
-                  <td class="px-5 py-3 text-sm text-slate-300 font-mono">72,114</td>
-                  <td class="px-5 py-3 text-sm text-amber-400 font-mono">42%</td>
-                </tr>
-                <tr class="hover:bg-blue-900/10 transition-colors duration-150">
-                  <td class="px-5 py-3 text-sm text-blue-400 font-mono">/products</td>
-                  <td class="px-5 py-3 text-sm text-slate-300 font-mono">51,832</td>
-                  <td class="px-5 py-3 text-sm text-slate-300 font-mono">41,209</td>
-                  <td class="px-5 py-3 text-sm text-emerald-400 font-mono">28%</td>
-                </tr>
-                <tr class="hover:bg-blue-900/10 transition-colors duration-150">
-                  <td class="px-5 py-3 text-sm text-blue-400 font-mono">/pricing</td>
-                  <td class="px-5 py-3 text-sm text-slate-300 font-mono">38,441</td>
-                  <td class="px-5 py-3 text-sm text-slate-300 font-mono">32,008</td>
-                  <td class="px-5 py-3 text-sm text-emerald-400 font-mono">31%</td>
-                </tr>
-                <tr class="hover:bg-blue-900/10 transition-colors duration-150">
-                  <td class="px-5 py-3 text-sm text-blue-400 font-mono">/blog</td>
-                  <td class="px-5 py-3 text-sm text-slate-300 font-mono">29,917</td>
-                  <td class="px-5 py-3 text-sm text-slate-300 font-mono">28,103</td>
-                  <td class="px-5 py-3 text-sm text-red-400 font-mono">61%</td>
-                </tr>
-                <tr class="hover:bg-blue-900/10 transition-colors duration-150">
-                  <td class="px-5 py-3 text-sm text-blue-400 font-mono">/checkout</td>
-                  <td class="px-5 py-3 text-sm text-slate-300 font-mono">12,483</td>
-                  <td class="px-5 py-3 text-sm text-slate-300 font-mono">12,112</td>
-                  <td class="px-5 py-3 text-sm text-emerald-400 font-mono">18%</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-        </div>
-      </main>
     </div>
+    <nav class="flex-1 overflow-y-auto py-4 px-3">
+      <ul class="space-y-0.5" role="list">
+        <li><a href="index.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg><span>Dashboard</span></a></li>
+        <li><a href="analytics.html" aria-current="page" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-blue-600/20 text-blue-400 border border-blue-500/20 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg><span>Nutrition</span></a></li>
+        <li><a href="users.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>Finance</span></a></li>
+        <li><a href="orders.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg><span>Gym</span></a></li>
+        <li><a href="reports.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg><span>Education</span></a></li>
+        <li><a href="reselling.html" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-blue-900/30 hover:text-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"><svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg><span>Reselling</span></a></li>
+      </ul>
+    </nav>
+  </aside>
+  <div class="flex-1 flex flex-col lg:ml-64 min-h-screen overflow-y-auto">
+    <header class="h-16 bg-[#0D1426]/80 backdrop-blur-sm border-b border-blue-900/30 flex items-center px-4 gap-4 sticky top-0 z-20 flex-shrink-0">
+      <button id="sidebarToggle" class="lg:hidden p-2 text-slate-400 hover:text-slate-200 hover:bg-blue-900/30 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <span class="font-mono text-sm font-semibold text-slate-200">Nutrition</span>
+    </header>
+    <main class="flex-1 p-6"></main>
   </div>
-
-  <div id="sidebarOverlay" class="fixed inset-0 bg-black/60 z-20 hidden lg:hidden" aria-hidden="true"></div>
-
-  <script>
-    const sidebar = document.getElementById('sidebar');
-    const toggle = document.getElementById('sidebarToggle');
-    const overlay = document.getElementById('sidebarOverlay');
-    toggle.addEventListener('click', () => {
-      const isOpen = !sidebar.classList.contains('-translate-x-full');
-      sidebar.classList.toggle('-translate-x-full', isOpen);
-      overlay.classList.toggle('hidden', isOpen);
-      toggle.setAttribute('aria-expanded', String(!isOpen));
-    });
-    overlay.addEventListener('click', () => { sidebar.classList.add('-translate-x-full'); overlay.classList.add('hidden'); toggle.setAttribute('aria-expanded','false'); });
-
-    new Chart(document.getElementById('userGrowthChart').getContext('2d'), {
-      type: 'bar',
-      data: {
-        labels: ['Jan','Feb','Mar','Apr','May','Jun'],
-        datasets: [
-          { label: 'New Users', data: [2100,2800,2400,3200,3900,4600], backgroundColor: '#3B82F6', borderRadius: 4, borderSkipped: false },
-          { label: 'Returning', data: [5200,5800,6100,6700,7400,8100], backgroundColor: '#1E3A8A', borderRadius: 4, borderSkipped: false }
-        ]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position:'top', align:'end', labels: { color:'#94A3B8', font:{family:'Fira Sans',size:11}, boxWidth:10, boxHeight:10, padding:16, usePointStyle:true } }, tooltip: { backgroundColor:'#0D1426', borderColor:'#1E3A8A', borderWidth:1, titleColor:'#F1F5F9', bodyColor:'#94A3B8', padding:10 } },
-        scales: { x: { grid:{color:'rgba(30,58,138,0.15)'}, ticks:{color:'#475569',font:{family:'Fira Sans',size:11}}, border:{display:false}, stacked:false }, y: { grid:{color:'rgba(30,58,138,0.15)'}, ticks:{color:'#475569',font:{family:'Fira Code',size:10}}, border:{display:false} } }
-      }
-    });
-
-    new Chart(document.getElementById('deviceChart').getContext('2d'), {
-      type: 'doughnut',
-      data: { labels: ['Mobile','Desktop','Tablet'], datasets: [{ data:[58,34,8], backgroundColor:['#3B82F6','#8B5CF6','#F59E0B'], borderColor:'#111827', borderWidth:3, hoverOffset:4 }] },
-      options: { responsive:true, maintainAspectRatio:false, cutout:'72%', plugins:{ legend:{display:false}, tooltip:{backgroundColor:'#0D1426',borderColor:'#1E3A8A',borderWidth:1,titleColor:'#F1F5F9',bodyColor:'#94A3B8',padding:10,callbacks:{label:ctx=>` ${ctx.parsed}%`}} } }
-    });
-  </script>
+</div>
+<div id="sidebarOverlay" class="fixed inset-0 bg-black/60 z-20 hidden lg:hidden"></div>
+<script>
+  const s=document.getElementById('sidebar'),t=document.getElementById('sidebarToggle'),o=document.getElementById('sidebarOverlay');
+  t.addEventListener('click',()=>{const open=!s.classList.contains('-translate-x-full');s.classList.toggle('-translate-x-full',open);o.classList.toggle('hidden',open);t.setAttribute('aria-expanded',String(!open))});
+  o.addEventListener('click',()=>{s.classList.add('-translate-x-full');o.classList.add('hidden');t.setAttribute('aria-expanded','false')});
+</script>
 </body>
 </html>
